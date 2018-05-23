@@ -2,14 +2,13 @@ package run;
 
 import java.io.IOException;
 
-import comunication.Client;
+import controllers.Controller;
 
 public class Run {
 
 	public static void main(String[] args) {
 		try {
-			Client c = new Client();
-			c.requestMessage();
+			new Controller();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

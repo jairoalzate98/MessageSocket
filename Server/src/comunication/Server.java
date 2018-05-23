@@ -30,13 +30,21 @@ public class Server extends Thread{
 	@Override
 	public void run() {
 		while (!stop) {
+			Socket connection;
 			try {
-				Socket connection = server.accept();
-				connections.add(new ThreadSocket(connection));
+				connection = server.accept();
+				connections.add(new ThreadSocket(connection, this));
 				LOGGER.log(Level.INFO, "Conexion aceptada: " + connection.getInetAddress().getHostAddress());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void sendMessages(String message) throws IOException{
+		for (ThreadSocket threadSocket : connections) {
+			threadSocket.send(message);
+			LOGGER.log(Level.INFO, "Se envio el mensaje a " + threadSocket);
 		}
 	}
 }

@@ -34,11 +34,11 @@ public class Client extends Thread {
 		}
 	}
 
-	private void manageResponse(String response) {
-		System.out.println(response);
+	private void manageResponse(String response) throws IOException {
+		System.out.println(input.readUTF());
 	}
 
-	public void requestMessage() throws IOException{
-		output.writeUTF(Request.MESSAGE.toString());
+	public void requestMessage(String message) throws IOException{
+		output.writeUTF(message);
 	}
 }

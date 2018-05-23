@@ -13,9 +13,11 @@ public class ThreadSocket extends Thread{
 	private DataInputStream input;
 	private DataOutputStream output;
 	private boolean stop;
+	private Server server;
 
-	public ThreadSocket(Socket socket) throws IOException {
+	public ThreadSocket(Socket socket, Server server) throws IOException {
 		this.connection = socket;
+		this.server = server;
 		input = new DataInputStream(socket.getInputStream());
 		output = new DataOutputStream(socket.getOutputStream());
 		start();
@@ -27,6 +29,7 @@ public class ThreadSocket extends Thread{
 			String request;
 			try {
 				request = input.readUTF();
+				System.out.println(request);
 				if (request != null) {
 					manageRequest(request);
 				}
@@ -35,9 +38,19 @@ public class ThreadSocket extends Thread{
 			}
 		}
 	}
+	
+	public void send(String message) throws IOException{
+		output.writeUTF(message);
+	}
 
 	private void manageRequest(String request) throws IOException {
 		Server.LOGGER.log(Level.INFO, "Request: " + connection.getInetAddress().getHostAddress() + " - " + request);
-		output.writeUTF("Hola");
+		server.sendMessages(request);
+		Server.LOGGER.log(Level.INFO, "Conexion con: " + connection.getInetAddress().getHostAddress() + " cerrada.");
+	}
+	
+	@Override
+	public String toString() {
+		return connection.getInetAddress().getHostAddress();
 	}
 }
