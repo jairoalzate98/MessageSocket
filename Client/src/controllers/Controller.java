@@ -22,7 +22,7 @@ public class Controller implements ActionListener{
 	}
 
 	private void startTimer() {
-		timer = new Timer(5000, new ActionListener() {
+		timer = new Timer(10, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				refreshList();
@@ -50,5 +50,6 @@ public class Controller implements ActionListener{
 
 	private void send() throws IOException {
 		client.requestMessage(mainWindow.getMessage());
+		mainWindow.clearCamps();
 	}
 }

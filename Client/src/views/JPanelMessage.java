@@ -47,4 +47,8 @@ public class JPanelMessage extends JPanel {
 	public String getMessage(){
 		return jTextArea.getText();
 	}
+
+	public void clearCamps() {
+		jTextArea.setText("");
+	}
 }

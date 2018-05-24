@@ -33,4 +33,8 @@ public class MainWindow extends JFrame {
 		jPanelMessage.setModel(nodeHead);
 		revalidate();
 	}
+
+	public void clearCamps() {
+		jPanelMessage.clearCamps();
+	}
 }

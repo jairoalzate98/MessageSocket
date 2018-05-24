@@ -61,5 +61,4 @@ public class Client extends Thread {
 			head = node;
 		}
 	}
-	
 }
