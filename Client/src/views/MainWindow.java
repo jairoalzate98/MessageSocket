@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import models.Node;
+
 public class MainWindow extends JFrame {
 
 	public static final String TITLE_FRAME = "Message";
@@ -25,5 +27,10 @@ public class MainWindow extends JFrame {
 	
 	public String getMessage(){
 		return jPanelMessage.getMessage();
+	}
+	
+	public void setModel(Node nodeHead){
+		jPanelMessage.setModel(nodeHead);
+		revalidate();
 	}
 }

@@ -40,11 +40,8 @@ public class Server extends Thread{
 			}
 		}
 	}
-	
-	public void sendMessages(String message) throws IOException{
-		for (ThreadSocket threadSocket : connections) {
-			threadSocket.send(message);
-			LOGGER.log(Level.INFO, "Se envio el mensaje a " + threadSocket);
-		}
+
+	public ArrayList<ThreadSocket> getConnections() {
+		return connections;
 	}
 }

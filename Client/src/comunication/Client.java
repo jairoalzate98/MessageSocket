@@ -4,6 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import models.Node;
 
 public class Client extends Thread {
 
@@ -11,6 +15,8 @@ public class Client extends Thread {
 	private DataInputStream input;
 	private DataOutputStream output;
 	private boolean stop;
+	private Node head;
+	public final static Logger LOGGER = Logger.getGlobal();
 
 	public Client() throws IOException {
 		this.connection = new Socket("localhost", 9000);
@@ -35,10 +41,25 @@ public class Client extends Thread {
 	}
 
 	private void manageResponse(String response) throws IOException {
-		System.out.println(input.readUTF());
+		addNode(new Node(response));
+		LOGGER.log(Level.INFO, "Mensaje Recibido" + response);
+	}
+
+	public Node getHead() {
+		return head;
 	}
 
 	public void requestMessage(String message) throws IOException{
 		output.writeUTF(message);
 	}
+	
+	public void addNode(Node node){
+		if (head != null) {
+			node.setNextNode(head);
+			head = node;
+		}else{
+			head = node;
+		}
+	}
+	
 }

@@ -8,9 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import controllers.Events;
+import models.Node;
 
 public class JPanelMessage extends JPanel {
 
@@ -18,6 +20,7 @@ public class JPanelMessage extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextArea jTextArea;
 	private JButton jbtnAccept;
+	private JPanelNotify jPanelNotify;
 
 	public JPanelMessage(ActionListener actionListener) {
 		setLayout(new FlowLayout());
@@ -31,6 +34,14 @@ public class JPanelMessage extends JPanel {
 		jbtnAccept.addActionListener(actionListener);
 		jbtnAccept.setPreferredSize(new Dimension(300, 50));
 		add(jbtnAccept);
+		jPanelNotify = new JPanelNotify();
+		JScrollPane js = new JScrollPane(jPanelNotify);
+		js.setPreferredSize(new Dimension(600, 150));
+		add(js);
+	}
+	
+	public void setModel(Node nodeHead){
+		jPanelNotify.setModel(nodeHead);
 	}
 	
 	public String getMessage(){

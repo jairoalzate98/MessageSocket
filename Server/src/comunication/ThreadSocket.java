@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 public class ThreadSocket extends Thread{
@@ -29,7 +30,6 @@ public class ThreadSocket extends Thread{
 			String request;
 			try {
 				request = input.readUTF();
-				System.out.println(request);
 				if (request != null) {
 					manageRequest(request);
 				}
@@ -45,7 +45,13 @@ public class ThreadSocket extends Thread{
 
 	private void manageRequest(String request) throws IOException {
 		Server.LOGGER.log(Level.INFO, "Request: " + connection.getInetAddress().getHostAddress() + " - " + request);
-		server.sendMessages(request);
+		ArrayList<ThreadSocket> connections = server.getConnections();
+		for (ThreadSocket threadSocket : connections) {
+			if (threadSocket != this) {
+				threadSocket.send(request);
+				Server.LOGGER.log(Level.INFO, "Se envio el mensaje a " + threadSocket);
+			}
+		}
 		Server.LOGGER.log(Level.INFO, "Conexion con: " + connection.getInetAddress().getHostAddress() + " cerrada.");
 	}
 	
